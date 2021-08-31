@@ -6,7 +6,7 @@
 
 <style>
     .grid {
-        width: 50%;
+        width: 500px;
         margin: 0 auto;
     }
 

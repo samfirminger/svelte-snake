@@ -10,7 +10,7 @@
     let direction = directions[Math.floor(Math.random() * directions.length)];
 
     onMount(async () => {
-        setInterval(updateSnakePos, 500);
+        setInterval(updateSnakePos, 400);
     });
 
     function updateSnakePos() {
@@ -35,16 +35,16 @@
         event.preventDefault();
         switch (event.keyCode) {
             case 38 :
-                direction = 'up';
+                direction = direction !== 'down' ? 'up' : direction;
                 break;
             case 39 :
-                direction = 'right';
+                direction = direction !== 'left' ? 'right' : direction;
                 break;
             case 40 :
-                direction = 'down';
+                direction = direction !== 'up' ? 'down' : direction;
                 break;
             case 37:
-                direction = 'left';
+                direction = direction !== 'right' ? 'left' : direction;
                 break;
         }
     }
