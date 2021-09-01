@@ -8,6 +8,7 @@
     let snake = [[snakeHeadPosX, snakeHeadPosY]];
     let foodPosX;
     let foodPosY;
+    let gameOver = false;
 
     const directions = ['up', 'right', 'down', 'left'];
     let direction = directions[Math.floor(Math.random() * directions.length)];
@@ -27,31 +28,46 @@
 
     onMount(async () => {
         generateNewFoodPos();
-        setInterval(updateSnakePos, 100);
+        setInterval(updateSnakePos, 200);
     });
 
     function updateSnakePos() {
-        checkForCollisions();
-        switch (direction) {
-            case 'up':
-                moveSnake([snake[0][0], snake[0][1] - 1 >= 0 ? snake[0][1] - 1 : gridSize - 1]);
-                break;
-            case 'right':
-                moveSnake([snake[0][0] + 1 <= gridSize - 1 ? snake[0][0] + 1 : 0, snake[0][1]]);
-                break;
-            case 'down':
-                moveSnake([snake[0][0], snake[0][1] + 1 < gridSize ? snake[0][1] + 1 : 0]);
-                break;
-            case 'left' :
-                moveSnake([snake[0][0] - 1 >= 0 ? snake[0][0] - 1 : gridSize - 1, snake[0][1]])
-                break;
+        if (!gameOver) {
+            checkForCollisions();
+            switch (direction) {
+                case 'up':
+                    moveSnake([snake[0][0], snake[0][1] - 1 >= 0 ? snake[0][1] - 1 : gridSize - 1]);
+                    break;
+                case 'right':
+                    moveSnake([snake[0][0] + 1 <= gridSize - 1 ? snake[0][0] + 1 : 0, snake[0][1]]);
+                    break;
+                case 'down':
+                    moveSnake([snake[0][0], snake[0][1] + 1 < gridSize ? snake[0][1] + 1 : 0]);
+                    break;
+                case 'left' :
+                    moveSnake([snake[0][0] - 1 >= 0 ? snake[0][0] - 1 : gridSize - 1, snake[0][1]])
+                    break;
+            }
         }
 
+    }
+
+    function arrayEquals(a, b) {
+        return Array.isArray(a) &&
+            Array.isArray(b) &&
+            a.length === b.length &&
+            a.every((val, index) => val === b[index]);
     }
 
     function moveSnake(position) {
         snake.unshift(position);
         snake = snake;
+
+        if(snake.slice(1).some(position => arrayEquals(snake[0], position))) {
+            gameOver = true;
+            return;
+        }
+
         snake.pop();
         snake = snake;
     }
@@ -62,7 +78,6 @@
             generateNewFoodPos();
         }
     }
-
 
     function handleKeydown(event) {
         event.preventDefault();
@@ -95,8 +110,11 @@
 
 <main>
     <div className="main-app-wrapper">
-        {#if gameOver}
+        {#if !gameOver}
             <Grid gridSize={gridSize} bind:snake bind:foodPosX bind:foodPosY/>
-            </div>
-            </main>
+        {:else}
+            <div>GAME OVER</div>
+        {/if}
+    </div>
+</main>
 
