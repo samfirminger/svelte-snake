@@ -1,7 +1,17 @@
 <script>
     export let gridSize;
-    export let snakeHeadPosX;
-    export let snakeHeadPosY;
+    export let snake;
+    export let foodPosX;
+    export let foodPosY;
+
+    function getCellName(snake, foodX, foodY, i, j) {
+        if (snake.some(value => value[0] ===j && value[1] === i)) {
+            return 'snake';
+        }
+        if (foodX === j && foodY === i) {
+            return 'food'
+        }
+    }
 </script>
 
 <style>
@@ -24,14 +34,18 @@
     .snake {
         background-color: #BFA2DB;
     }
+
+    .food {
+        background-color: #CDF0EA;
+    }
 </style>
 
 <div class="grid">
-    {snakeHeadPosX} {snakeHeadPosY}
+    {snake[0][0]} {snake[0][1]} {foodPosX} {foodPosY}
     {#each Array(gridSize) as _, i}
         <div class="row">
             {#each Array(gridSize) as _, j}
-                <div class="cell {snakeHeadPosX === j && snakeHeadPosY === i ? 'snake' : ''}"></div>
+                <div class="cell {getCellName(snake, foodPosX, foodPosY, i, j)}"></div>
             {/each}
         </div>
     {/each}
