@@ -5,16 +5,16 @@
     export let gridSize;
     export let snake;
     export let direction;
-    export let foodType;
-    export let foodPosX;
-    export let foodPosY;
+    export let gemType;
+    export let gemPosX;
+    export let gemPosY;
 
 
 </script>
 
 <style>
     .grid {
-        width: 750px;
+        width: 500px;
         margin: 0 auto;
     }
 
@@ -27,8 +27,6 @@
         display: flex;
     }
 
-
-
 </style>
 
 <div class="grid">
@@ -36,7 +34,7 @@
     {#each Array(gridSize) as _, i}
         <div class="row">
             {#each Array(gridSize) as _, j}
-                <GridCell snake="{snake}" direction="{direction}" foodType="{foodType}" foodPosX="{foodPosX}" foodPosY="{foodPosY}" i="{i}" j="{j}"/>
+                <GridCell snake="{snake}" direction="{direction}" foodType="{gemType}" foodPosX="{gemPosX}" foodPosY="{gemPosY}" i="{i}" j="{j}"/>
             {/each}
         </div>
     {/each}

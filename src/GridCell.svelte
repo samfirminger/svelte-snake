@@ -22,9 +22,12 @@
 
     .cell {
         background-color: black;
-        height: 50px;
-        width: 50px;
-        border: 1px solid black;
+        height: 25px;
+        width: 25px;
+    }
+
+    .roundedTopLeft {
+        border-radius: 10px 0 0 0 ;
     }
 
     .snake {
@@ -32,36 +35,33 @@
     }
 
     .snake-up {
-        background-image: url(/images/snakeUp.png);
+        background-image: url(/images/snakeUpSmall.png);
     }
 
     .snake-right {
-        background-image: url(/images/snakeRight.png);
+        background-image: url(/images/snakeRightSmall.png);
     }
 
     .snake-down {
-        background-image: url(/images/snakeDown.png);
+        background-image: url(/images/snakeDownSmall.png);
     }
 
     .snake-left {
-        background-image: url(/images/snakeLeft.png);
+        background-image: url(/images/snakeLeftSmall.png);
     }
 
     .ruby {
-        background-image: url(/images/ruby.png);
+        background-image: url(/images/rubySmall.png);
     }
 
     .emerald {
-        background-image: url(/images/emerald.png);
+        background-image: url(/images/emeraldSmall.png);
     }
 
     .sapphire {
-        background-image: url(/images/sapphire.png);
+        background-image: url(/images/sapphireSmall.png);
     }
 
-    .wallUp-1 {
-        background-image: url(/images/wall/wallUp-1.png);
-    }
 </style>
 
 <div>

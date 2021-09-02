@@ -1,38 +1,39 @@
 <script>
     import Grid from './Grid.svelte';
     import {onMount} from "svelte";
+    import GameOver from "./GameOver.svelte";
 
-    const gridSize = 12;
-    let snakeHeadPosX = Math.floor(Math.random() * (gridSize - 1));
-    let snakeHeadPosY = Math.floor(Math.random() * (gridSize - 1));
-    let snake = [[snakeHeadPosX, snakeHeadPosY]];
-    let foodType;
-    let foodPosX;
-    let foodPosY;
+    const gridSize = 20;
+    let snakeHeadPosX = 6;
+    let snakeHeadPosY = 10;
+    let snake = [[snakeHeadPosX, snakeHeadPosY], [snakeHeadPosX - 1, snakeHeadPosY]];
+    let gemType;
+    let gemPosX;
+    let gemPosY;
     let score = 0;
     let gameOver = false;
 
     const directions = ['up', 'right', 'down', 'left'];
-    let direction = directions[Math.floor(Math.random() * directions.length)];
+    let direction = directions[1];
 
-    function generateNewFoodPos() {
+    function generateNewGemPos() {
 
         const x = Math.floor(Math.random() * (gridSize - 1));
         const y = Math.floor(Math.random() * (gridSize - 1));
 
         if (!snake.some(snakeCell => arrayEquals(snakeCell, [x, y]))) {
-            foodPosX = x;
-            foodPosY = y;
+            gemPosX = x;
+            gemPosY = y;
 
-            let foodChance = Math.random();
-            foodType = foodChance <= 0.3 ? 'emerald' : foodChance > 0.3 && foodChance < 0.6 ? 'sapphire' : 'ruby';
+            let gemDieRoll = Math.random();
+            gemType = gemDieRoll <= 0.3 ? 'emerald' : gemDieRoll > 0.3 && gemDieRoll < 0.6 ? 'sapphire' : 'ruby';
             return;
         }
-        generateNewFoodPos();
+        generateNewGemPos();
     }
 
     onMount(async () => {
-        generateNewFoodPos();
+        generateNewGemPos();
         setInterval(updateSnakePos, 200);
     });
 
@@ -68,8 +69,9 @@
         snake.unshift(position);
         snake = snake;
 
-        if(snake.slice(1).some(position => arrayEquals(snake[0], position))) {
+        if (snake.slice(1).some(position => arrayEquals(snake[0], position))) {
             gameOver = true;
+            setHighScore();
             return;
         }
 
@@ -77,11 +79,23 @@
         snake = snake;
     }
 
+    function setHighScore() {
+        if (score === 0) {
+            return;
+        }
+        const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
+        if (!highScores.length || highScores.some(highScore => highScore <= score)) {
+            highScores.push(score);
+            highScores.sort((a, b) => b - a);
+            localStorage.setItem('highScores', JSON.stringify(highScores.slice(0,10)));
+        }
+    }
+
     function checkForCollisions() {
-        if (snake[0][0] === foodPosX && snake[0][1] === foodPosY) {
-            snake.push([foodPosX, foodPosY]);
-            generateNewFoodPos();
-            score+=5;
+        if (snake[0][0] === gemPosX && snake[0][1] === gemPosY) {
+            snake.push([gemPosX, gemPosY]);
+            score = score + (gemType === 'ruby' ? 20 : gemType === 'emerald' ? 10 : 5);
+            generateNewGemPos();
         }
     }
 
@@ -118,9 +132,9 @@
 <main>
     <div className="main-app-wrapper">
         {#if gameOver}
-            <div>GAME OVER</div>
+            <GameOver score={score}/>
         {:else}
-            <Grid gridSize={gridSize} bind:score bind:snake bind:direction bind:foodType bind:foodPosX bind:foodPosY/>
+            <Grid gridSize={gridSize} bind:score bind:snake bind:direction bind:gemType bind:gemPosX bind:gemPosY/>
         {/if}
     </div>
 </main>
