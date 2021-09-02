@@ -2,12 +2,13 @@
     import Grid from './Grid.svelte';
     import {onMount} from "svelte";
 
-    const gridSize = 10;
+    const gridSize = 15;
     let snakeHeadPosX = Math.floor(Math.random() * (gridSize - 1));
     let snakeHeadPosY = Math.floor(Math.random() * (gridSize - 1));
     let snake = [[snakeHeadPosX, snakeHeadPosY]];
     let foodPosX;
     let foodPosY;
+    let score = 0;
     let gameOver = false;
 
     const directions = ['up', 'right', 'down', 'left'];
@@ -18,7 +19,7 @@
         const x = Math.floor(Math.random() * (gridSize - 1));
         const y = Math.floor(Math.random() * (gridSize - 1));
 
-        if (x !== snakeHeadPosX && y !== snakeHeadPosY) {
+        if (!snake.some(snakeCell => arrayEquals(snakeCell, [x, y]))) {
             foodPosX = x;
             foodPosY = y;
             return;
@@ -76,6 +77,7 @@
         if (snake[0][0] === foodPosX && snake[0][1] === foodPosY) {
             snake.push([foodPosX, foodPosY]);
             generateNewFoodPos();
+            score+=5;
         }
     }
 
@@ -103,6 +105,7 @@
         text-align: center;
         padding: 1em;
         margin: 0 auto;
+        height: 100vh;
     }
 </style>
 
@@ -110,10 +113,10 @@
 
 <main>
     <div className="main-app-wrapper">
-        {#if !gameOver}
-            <Grid gridSize={gridSize} bind:snake bind:foodPosX bind:foodPosY/>
-        {:else}
+        {#if gameOver}
             <div>GAME OVER</div>
+        {:else}
+            <Grid gridSize={gridSize} bind:score bind:snake bind:foodPosX bind:foodPosY/>
         {/if}
     </div>
 </main>

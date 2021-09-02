@@ -1,4 +1,5 @@
 <script>
+    export let score;
     export let gridSize;
     export let snake;
     export let foodPosX;
@@ -16,8 +17,12 @@
 
 <style>
     .grid {
-        width: 500px;
+        width: 750px;
         margin: 0 auto;
+    }
+
+    .score {
+        text-align: right;
     }
 
     .row {
@@ -41,7 +46,7 @@
 </style>
 
 <div class="grid">
-    {snake[0][0]} {snake[0][1]} {foodPosX} {foodPosY}
+    <h1 class="score">Score: {score}</h1>
     {#each Array(gridSize) as _, i}
         <div class="row">
             {#each Array(gridSize) as _, j}
