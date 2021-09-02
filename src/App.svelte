@@ -2,10 +2,11 @@
     import Grid from './Grid.svelte';
     import {onMount} from "svelte";
 
-    const gridSize = 15;
+    const gridSize = 12;
     let snakeHeadPosX = Math.floor(Math.random() * (gridSize - 1));
     let snakeHeadPosY = Math.floor(Math.random() * (gridSize - 1));
     let snake = [[snakeHeadPosX, snakeHeadPosY]];
+    let foodType;
     let foodPosX;
     let foodPosY;
     let score = 0;
@@ -22,6 +23,9 @@
         if (!snake.some(snakeCell => arrayEquals(snakeCell, [x, y]))) {
             foodPosX = x;
             foodPosY = y;
+
+            let foodChance = Math.random();
+            foodType = foodChance <= 0.3 ? 'emerald' : foodChance > 0.3 && foodChance < 0.6 ? 'sapphire' : 'ruby';
             return;
         }
         generateNewFoodPos();
@@ -116,7 +120,7 @@
         {#if gameOver}
             <div>GAME OVER</div>
         {:else}
-            <Grid gridSize={gridSize} bind:score bind:snake bind:foodPosX bind:foodPosY/>
+            <Grid gridSize={gridSize} bind:score bind:snake bind:direction bind:foodType bind:foodPosX bind:foodPosY/>
         {/if}
     </div>
 </main>

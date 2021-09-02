@@ -1,18 +1,15 @@
 <script>
+    import GridCell from "./GridCell.svelte";
+
     export let score;
     export let gridSize;
     export let snake;
+    export let direction;
+    export let foodType;
     export let foodPosX;
     export let foodPosY;
 
-    function getCellName(snake, foodX, foodY, i, j) {
-        if (snake.some(value => value[0] ===j && value[1] === i)) {
-            return 'snake';
-        }
-        if (foodX === j && foodY === i) {
-            return 'food'
-        }
-    }
+
 </script>
 
 <style>
@@ -23,26 +20,15 @@
 
     .score {
         text-align: right;
+        color: #EEEEEE;
     }
 
     .row {
         display: flex;
     }
 
-    .cell {
-        background-color: #F0D9FF;
-        height: 50px;
-        width: 50px;
-        border: 1px solid black;
-    }
 
-    .snake {
-        background-color: #BFA2DB;
-    }
 
-    .food {
-        background-color: #CDF0EA;
-    }
 </style>
 
 <div class="grid">
@@ -50,7 +36,7 @@
     {#each Array(gridSize) as _, i}
         <div class="row">
             {#each Array(gridSize) as _, j}
-                <div class="cell {getCellName(snake, foodPosX, foodPosY, i, j)}"></div>
+                <GridCell snake="{snake}" direction="{direction}" foodType="{foodType}" foodPosX="{foodPosX}" foodPosY="{foodPosY}" i="{i}" j="{j}"/>
             {/each}
         </div>
     {/each}
