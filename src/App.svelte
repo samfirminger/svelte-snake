@@ -34,7 +34,7 @@
 
     onMount(async () => {
         generateNewGemPos();
-        setInterval(updateSnakePos, 200);
+        setInterval(updateSnakePos, 150);
     });
 
     function updateSnakePos() {
@@ -84,7 +84,7 @@
             return;
         }
         const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
-        if (!highScores.length || highScores.some(highScore => highScore <= score)) {
+        if (!highScores.length || highScores.length < 10 || highScores.some(highScore => highScore <= score)) {
             highScores.push(score);
             highScores.sort((a, b) => b - a);
             localStorage.setItem('highScores', JSON.stringify(highScores.slice(0,10)));
@@ -124,6 +124,21 @@
         padding: 1em;
         margin: 0 auto;
         height: 100vh;
+
+        height: 100vh;
+        -webkit-flex-flow: column wrap;
+        -ms-flex-flow: column wrap;
+        flex-flow: column wrap;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack:center;
+        -webkit-justify-content:center;
+        -ms-flex-pack:center;
+        justify-content:center;
+
+
     }
 </style>
 

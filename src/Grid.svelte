@@ -13,9 +13,18 @@
 </script>
 
 <style>
-    .grid {
+    .grid-container {
         width: 500px;
         margin: 0 auto;
+
+    }
+
+    .grid {
+        box-shadow: 0 1px 1px rgba(0,0,0,0.12),
+        0 2px 2px rgba(0,0,0,0.12),
+        0 4px 4px rgba(0,0,0,0.12),
+        0 8px 8px rgba(0,0,0,0.12),
+        0 16px 16px rgba(0,0,0,0.12);
     }
 
     .score {
@@ -29,8 +38,8 @@
 
 </style>
 
-<div class="grid">
-    <h1 class="score">Score: {score}</h1>
+<div class="grid-container">
+    <div class="grid">
     {#each Array(gridSize) as _, i}
         <div class="row">
             {#each Array(gridSize) as _, j}
@@ -38,4 +47,6 @@
             {/each}
         </div>
     {/each}
+    </div>
+    <h1 class="score">Score: {score}</h1>
 </div>

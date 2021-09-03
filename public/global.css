@@ -11,11 +11,12 @@ body {
 	padding: 8px;
 	box-sizing: border-box;
 	font-family: 'Press Start 2P', cursive;
+	text-shadow: 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-size: cover;
 	background-position: top;
-	background-image:url(/images/cave.jpeg);
+	background-image:url(/images/cave2.png);
 }
 
 a {
