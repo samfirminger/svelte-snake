@@ -26,7 +26,9 @@
             gemPosY = y;
 
             let gemDieRoll = Math.random();
-            gemType = gemDieRoll <= 0.3 ? 'emerald' : gemDieRoll > 0.3 && gemDieRoll < 0.6 ? 'sapphire' : 'ruby';
+            gemType = gemDieRoll <= 0.05 ? 'diamond' :
+                gemDieRoll > 0.05 && gemDieRoll <= 0.3 ? 'emerald' :
+                    gemDieRoll > 0.3 && gemDieRoll < 0.8 ? 'sapphire' : 'ruby';
             return;
         }
         generateNewGemPos();
@@ -87,14 +89,14 @@
         if (!highScores.length || highScores.length < 10 || highScores.some(highScore => highScore <= score)) {
             highScores.push(score);
             highScores.sort((a, b) => b - a);
-            localStorage.setItem('highScores', JSON.stringify(highScores.slice(0,10)));
+            localStorage.setItem('highScores', JSON.stringify(highScores.slice(0, 10)));
         }
     }
 
     function checkForCollisions() {
         if (snake[0][0] === gemPosX && snake[0][1] === gemPosY) {
             snake.push([gemPosX, gemPosY]);
-            score = score + (gemType === 'ruby' ? 20 : gemType === 'emerald' ? 10 : 5);
+            score = score + (gemType === 'diamond' ? 50 : gemType === 'ruby' ? 20 : gemType === 'emerald' ? 10 : 5);
             generateNewGemPos();
         }
     }
@@ -133,12 +135,10 @@
         display: -webkit-flex;
         display: -ms-flexbox;
         display: flex;
-        -webkit-box-pack:center;
-        -webkit-justify-content:center;
-        -ms-flex-pack:center;
-        justify-content:center;
-
-
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
     }
 </style>
 

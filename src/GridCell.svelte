@@ -21,13 +21,9 @@
 <style>
 
     .cell {
-        background-color: black;
+        background-color: rgba(0,0,0,0.6);
         height: 25px;
         width: 25px;
-    }
-
-    .roundedTopLeft {
-        border-radius: 10px 0 0 0 ;
     }
 
     .snake {
@@ -35,31 +31,35 @@
     }
 
     .snake-up {
-        background-image: url(/images/snakeUpSmall.png);
+        background-image: url(/images/snakeFullUpSmall.png);
     }
 
     .snake-right {
-        background-image: url(/images/snakeRightSmall.png);
+        background-image: url(/images/snakeFullRightSmall.png);
     }
 
     .snake-down {
-        background-image: url(/images/snakeDownSmall.png);
+        background-image: url(/images/snakeFullDownSmall.png);
     }
 
     .snake-left {
-        background-image: url(/images/snakeLeftSmall.png);
+        background-image: url(/images/snakeFullLeftSmall.png);
     }
 
     .ruby {
-        background-image: url(/images/rubySmall.png);
+        background-image: url(/images/rubyT.png);
     }
 
     .emerald {
-        background-image: url(/images/emeraldSmall.png);
+        background-image: url(/images/emeraldT.png);
     }
 
     .sapphire {
-        background-image: url(/images/sapphireSmall.png);
+        background-image: url(/images/sapphireT.png);
+    }
+
+    .diamond {
+        background-image: url(/images/diamondT.png);
     }
 
 </style>
