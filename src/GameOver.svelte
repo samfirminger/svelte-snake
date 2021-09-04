@@ -1,26 +1,46 @@
 <script>
+    import { createEventDispatcher } from 'svelte';
+
+    //Declare the dispatch
+    const dispatch = createEventDispatcher();
+
     export let score;
     let highScores = JSON.parse(localStorage.getItem('highScores')) || [];
     let currentScoreIndex = highScores.findIndex(highScore => highScore === score);
 
     function playAgain() {
-
+        dispatch('playAgain');
     }
 </script>
 
 <style>
-    .game-over {
-        width: 30%;
-        margin-left: auto;
-        margin-right: auto;
-        padding: 20px;
-        background-color: rgba(20,22,47,0.5);
-        border-radius: 5px;
-        box-shadow: 0 1px 1px rgba(0,0,0,0.12),
-        0 2px 2px rgba(0,0,0,0.12),
-        0 4px 4px rgba(0,0,0,0.12),
-        0 8px 8px rgba(0,0,0,0.12),
-        0 16px 16px rgba(0,0,0,0.12);
+
+    @media only screen and (min-width: 200px) {
+        .game-over {
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 20px;
+            background-color: rgba(20,22,47,0.5);
+            border-radius: 5px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.12),
+            0 2px 2px rgba(0,0,0,0.12),
+            0 4px 4px rgba(0,0,0,0.12),
+            0 8px 8px rgba(0,0,0,0.12),
+            0 16px 16px rgba(0,0,0,0.12);
+        }
+    }
+
+    @media only screen and (min-width: 600px) {
+        .game-over {
+            width: 60%;
+        }
+    }
+
+    @media only screen and (min-width: 768px) {
+        .game-over {
+            width: 30%;
+        }
     }
 
     .game-over-text {
@@ -42,6 +62,10 @@
     .play-again-button {
         padding: 10px;
         cursor: pointer;
+    }
+
+    .play-again-button:hover {
+        background-color: #b5b3b3;
     }
 
 </style>

@@ -12,7 +12,6 @@
     .grid-container {
         width: 500px;
         margin: 0 auto;
-
     }
 
     .grid {

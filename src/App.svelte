@@ -9,7 +9,8 @@
     // snake
     let snakeHeadPosX = 6;
     let snakeHeadPosY = 10;
-    let snake = [[snakeHeadPosX, snakeHeadPosY], [snakeHeadPosX - 1, snakeHeadPosY]];
+    let initialSnake = [[snakeHeadPosX, snakeHeadPosY], [snakeHeadPosX - 1, snakeHeadPosY]];
+    let snake = [...initialSnake];
     const directions = ['up', 'right', 'down', 'left'];
     let direction = directions[1];
     // gem
@@ -136,6 +137,13 @@
                 break;
         }
     }
+
+    function playAgain() {
+        snake = [...initialSnake];
+        direction = directions[1];
+        score = 0;
+        gameOver = false;
+    }
 </script>
 
 <style>
@@ -158,6 +166,11 @@
         -ms-flex-pack: center;
         justify-content: center;
     }
+
+    .main-app-wrapper {
+        display: flex;
+        align-items: center;
+    }
 </style>
 
 <svelte:window on:keydown={handleKeydown}/>
@@ -165,7 +178,7 @@
 <main>
     <div class="main-app-wrapper">
         {#if gameOver}
-            <GameOver score={score}/>
+            <GameOver score={score}  on:playAgain={playAgain}/>
         {:else}
             <Grid gridSize={gridSize} bind:score bind:snake bind:direction bind:gem/>
         {/if}
