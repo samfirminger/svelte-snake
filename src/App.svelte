@@ -49,20 +49,37 @@
 
 
     function updateSnakePos() {
+
         if (!gameOver) {
             checkForGemCollision();
             switch (direction) {
                 case 'up':
-                    moveSnake([snake[0][0], snake[0][1] - 1 >= 0 ? snake[0][1] - 1 : gridSize - 1]);
+                    if (snake[0][1] - 1 < 0) {
+                        gameOver = true;
+                        break;
+                    }
+                    moveSnake([snake[0][0], snake[0][1] - 1]);
                     break;
                 case 'right':
-                    moveSnake([snake[0][0] + 1 <= gridSize - 1 ? snake[0][0] + 1 : 0, snake[0][1]]);
+                    if (snake[0][0] + 1 >= gridSize) {
+                        gameOver = true;
+                        break;
+                    }
+                    moveSnake([snake[0][0] + 1, snake[0][1]]);
                     break;
                 case 'down':
-                    moveSnake([snake[0][0], snake[0][1] + 1 < gridSize ? snake[0][1] + 1 : 0]);
+                    if (snake[0][1] + 1 >= gridSize) {
+                        gameOver = true;
+                        break;
+                    }
+                    moveSnake([snake[0][0], snake[0][1] + 1]);
                     break;
                 case 'left' :
-                    moveSnake([snake[0][0] - 1 >= 0 ? snake[0][0] - 1 : gridSize - 1, snake[0][1]])
+                    if (snake[0][0] - 1 < 0) {
+                        gameOver = true;
+                        break;
+                    }
+                    moveSnake([snake[0][0] - 1, snake[0][1]])
                     break;
             }
         }

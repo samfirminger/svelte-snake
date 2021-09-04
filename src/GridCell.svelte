@@ -11,7 +11,7 @@
         let cellClassName = 'cell';
 
         if (snake.some(snakeCell => arrayEquals(snakeCell, [j, i]))) {
-            cellClassName += arrayEquals(snake[0], [j,i]) ? ` snake-${direction}` : ' snake'
+            cellClassName += arrayEquals(snake[0], [j, i]) ? ` snake-${direction}` : ' snake'
         } else if (gem.x === j && gem.y === i) {
             cellClassName += (' ' + gem.type);
         }

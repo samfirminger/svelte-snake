@@ -1,6 +1,9 @@
 *Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
 
 ---
+# Check out it live hosted on Netlify
+
+https://loving-engelbart-e37fe8.netlify.app/
 
 # svelte app
 
