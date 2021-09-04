@@ -1,27 +1,29 @@
 <script>
-    export let snake;
-    export let i;
-    export let j;
-    export let direction;
-    export let foodType;
-    export let foodPosX;
-    export let foodPosY;
+    import {arrayEquals} from "./shared.js";
 
-    function getCellName(snake, foodX, foodY, i, j) {
-        let className = 'cell';
-        if (snake.some(snakeCell => snakeCell[0] === j && snakeCell[1] === i)) {
-            className += snake[0][0] === j && snake[0][1] === i ? ` snake-${direction}` : ' snake'
-        } else if (foodX === j && foodY === i) {
-            className += (' ' + foodType);
+    export let snake;
+    export let i = undefined;
+    export let j = undefined;
+    export let direction = undefined;
+    export let gem = {};
+
+    function getCellName(snake, gem, i, j) {
+        let cellClassName = 'cell';
+
+        if (snake.some(snakeCell => arrayEquals(snakeCell, [j, i]))) {
+            cellClassName += arrayEquals(snake[0], [j,i]) ? ` snake-${direction}` : ' snake'
+        } else if (gem.x === j && gem.y === i) {
+            cellClassName += (' ' + gem.type);
         }
-        return className;
+        return cellClassName;
     }
+
 </script>
 
 <style>
 
     .cell {
-        background-color: rgba(0,0,0,0.6);
+        background-color: rgba(0, 0, 0, 0.6);
         height: 25px;
         width: 25px;
     }
@@ -65,5 +67,5 @@
 </style>
 
 <div>
-    <div class="{getCellName(snake, foodPosX, foodPosY, i, j)}"></div>
+    <div class="{getCellName(snake, gem, i, j)}"></div>
 </div>

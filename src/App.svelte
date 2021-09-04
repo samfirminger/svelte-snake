@@ -2,19 +2,32 @@
     import Grid from './Grid.svelte';
     import {onMount} from "svelte";
     import GameOver from "./GameOver.svelte";
+    import {arrayEquals} from "./shared.js";
 
+    // grid
     const gridSize = 20;
+    // snake
     let snakeHeadPosX = 6;
     let snakeHeadPosY = 10;
     let snake = [[snakeHeadPosX, snakeHeadPosY], [snakeHeadPosX - 1, snakeHeadPosY]];
-    let gemType;
-    let gemPosX;
-    let gemPosY;
+    const directions = ['up', 'right', 'down', 'left'];
+    let direction = directions[1];
+    // gem
+    const gems = {
+        ['diamond']: 50,
+        ['ruby']: 20,
+        ['emerald']: 10,
+        ['sapphire']: 5
+    }
+    let gem = {};
+    // game info
     let score = 0;
     let gameOver = false;
 
-    const directions = ['up', 'right', 'down', 'left'];
-    let direction = directions[1];
+    onMount(async () => {
+        generateNewGemPos();
+        setInterval(updateSnakePos, 150);
+    });
 
     function generateNewGemPos() {
 
@@ -22,26 +35,22 @@
         const y = Math.floor(Math.random() * (gridSize - 1));
 
         if (!snake.some(snakeCell => arrayEquals(snakeCell, [x, y]))) {
-            gemPosX = x;
-            gemPosY = y;
+            gem.x = x;
+            gem.y = y;
 
             let gemDieRoll = Math.random();
-            gemType = gemDieRoll <= 0.05 ? 'diamond' :
-                gemDieRoll > 0.05 && gemDieRoll <= 0.3 ? 'emerald' :
-                    gemDieRoll > 0.3 && gemDieRoll < 0.8 ? 'sapphire' : 'ruby';
+            gem.type = gemDieRoll <= 0.05 ? 'diamond' :
+                gemDieRoll > 0.05 && gemDieRoll <= 0.2 ? 'ruby' :
+                    gemDieRoll > 0.2 && gemDieRoll < 0.4 ? 'emerald' : 'sapphire';
             return;
         }
         generateNewGemPos();
     }
 
-    onMount(async () => {
-        generateNewGemPos();
-        setInterval(updateSnakePos, 150);
-    });
 
     function updateSnakePos() {
         if (!gameOver) {
-            checkForCollisions();
+            checkForGemCollision();
             switch (direction) {
                 case 'up':
                     moveSnake([snake[0][0], snake[0][1] - 1 >= 0 ? snake[0][1] - 1 : gridSize - 1]);
@@ -57,21 +66,13 @@
                     break;
             }
         }
-
-    }
-
-    function arrayEquals(a, b) {
-        return Array.isArray(a) &&
-            Array.isArray(b) &&
-            a.length === b.length &&
-            a.every((val, index) => val === b[index]);
     }
 
     function moveSnake(position) {
         snake.unshift(position);
         snake = snake;
 
-        if (snake.slice(1).some(position => arrayEquals(snake[0], position))) {
+        if (snake.slice(1).some(snakeCell => arrayEquals(snake[0], snakeCell))) {
             gameOver = true;
             setHighScore();
             return;
@@ -93,10 +94,10 @@
         }
     }
 
-    function checkForCollisions() {
-        if (snake[0][0] === gemPosX && snake[0][1] === gemPosY) {
-            snake.push([gemPosX, gemPosY]);
-            score = score + (gemType === 'diamond' ? 50 : gemType === 'ruby' ? 20 : gemType === 'emerald' ? 10 : 5);
+    function checkForGemCollision() {
+        if (arrayEquals(snake[0], [gem.x, gem.y])) {
+            snake.push([gem.x, gem.y]);
+            score = score + gems[gem.type];
             generateNewGemPos();
         }
     }
@@ -145,11 +146,11 @@
 <svelte:window on:keydown={handleKeydown}/>
 
 <main>
-    <div className="main-app-wrapper">
+    <div class="main-app-wrapper">
         {#if gameOver}
             <GameOver score={score}/>
         {:else}
-            <Grid gridSize={gridSize} bind:score bind:snake bind:direction bind:gemType bind:gemPosX bind:gemPosY/>
+            <Grid gridSize={gridSize} bind:score bind:snake bind:direction bind:gem/>
         {/if}
     </div>
 </main>

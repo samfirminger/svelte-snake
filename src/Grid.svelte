@@ -2,14 +2,10 @@
     import GridCell from "./GridCell.svelte";
 
     export let score;
-    export let gridSize;
+    export let gridSize = 20;
     export let snake;
     export let direction;
-    export let gemType;
-    export let gemPosX;
-    export let gemPosY;
-
-
+    export let gem;
 </script>
 
 <style>
@@ -43,7 +39,7 @@
     {#each Array(gridSize) as _, i}
         <div class="row">
             {#each Array(gridSize) as _, j}
-                <GridCell snake="{snake}" direction="{direction}" foodType="{gemType}" foodPosX="{gemPosX}" foodPosY="{gemPosY}" i="{i}" j="{j}"/>
+                <GridCell bind:snake bind:direction bind:gem i={i} j={j}/>
             {/each}
         </div>
     {/each}
