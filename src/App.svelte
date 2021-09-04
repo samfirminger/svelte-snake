@@ -24,10 +24,11 @@
     // game info
     let score = 0;
     let gameOver = false;
+    let interval;
 
     onMount(async () => {
         generateNewGemPos();
-        setInterval(updateSnakePos, 150);
+        interval = setInterval(updateSnakePos, 150);
     });
 
     function generateNewGemPos() {
@@ -56,28 +57,28 @@
             switch (direction) {
                 case 'up':
                     if (snake[0][1] - 1 < 0) {
-                        gameOver = true;
+                        gameOver();
                         break;
                     }
                     moveSnake([snake[0][0], snake[0][1] - 1]);
                     break;
                 case 'right':
                     if (snake[0][0] + 1 >= gridSize) {
-                        gameOver = true;
+                        gameOver();
                         break;
                     }
                     moveSnake([snake[0][0] + 1, snake[0][1]]);
                     break;
                 case 'down':
                     if (snake[0][1] + 1 >= gridSize) {
-                        gameOver = true;
+                        gameOver();
                         break;
                     }
                     moveSnake([snake[0][0], snake[0][1] + 1]);
                     break;
                 case 'left' :
                     if (snake[0][0] - 1 < 0) {
-                        gameOver = true;
+                        gameOver();
                         break;
                     }
                     moveSnake([snake[0][0] - 1, snake[0][1]])
@@ -86,12 +87,17 @@
         }
     }
 
+    function gameOver() {
+        gameOver = true;
+        interval = clearInterval();
+    }
+
     function moveSnake(position) {
         snake.unshift(position);
         snake = snake;
 
         if (snake.slice(1).some(snakeCell => arrayEquals(snake[0], snakeCell))) {
-            gameOver = true;
+            gameOver();
             setHighScore();
             return;
         }
