@@ -57,28 +57,28 @@
             switch (direction) {
                 case 'up':
                     if (snake[0][1] - 1 < 0) {
-                        gameOver();
+                        triggerGameOver();
                         break;
                     }
                     moveSnake([snake[0][0], snake[0][1] - 1]);
                     break;
                 case 'right':
                     if (snake[0][0] + 1 >= gridSize) {
-                        gameOver();
+                        triggerGameOver();
                         break;
                     }
                     moveSnake([snake[0][0] + 1, snake[0][1]]);
                     break;
                 case 'down':
                     if (snake[0][1] + 1 >= gridSize) {
-                        gameOver();
+                        triggerGameOver();
                         break;
                     }
                     moveSnake([snake[0][0], snake[0][1] + 1]);
                     break;
                 case 'left' :
                     if (snake[0][0] - 1 < 0) {
-                        gameOver();
+                        triggerGameOver();
                         break;
                     }
                     moveSnake([snake[0][0] - 1, snake[0][1]])
@@ -87,7 +87,8 @@
         }
     }
 
-    function gameOver() {
+    function triggerGameOver() {
+        setHighScore();
         gameOver = true;
         interval = clearInterval();
     }
@@ -97,8 +98,7 @@
         snake = snake;
 
         if (snake.slice(1).some(snakeCell => arrayEquals(snake[0], snakeCell))) {
-            gameOver();
-            setHighScore();
+            triggerGameOver();
             return;
         }
 
