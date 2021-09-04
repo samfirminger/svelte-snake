@@ -5,6 +5,8 @@
 
 https://loving-engelbart-e37fe8.netlify.app/
 
+For some reason, the snake head images are slow to load the first time on netlify. Advised to run locally if you can. 
+
 # svelte app
 
 This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.
