@@ -148,6 +148,7 @@
         snake = [...initialSnake];
         direction = directions[1];
         score = 0;
+        generateNewGemPos();
         gameOver = false;
     }
 </script>
