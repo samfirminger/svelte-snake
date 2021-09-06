@@ -174,7 +174,7 @@
         justify-content: center;
     }
 
-    .main-app-wrapper {
+    .main-app__wrapper {
         display: flex;
         align-items: center;
     }
@@ -183,7 +183,7 @@
 <svelte:window on:keydown={handleKeydown}/>
 
 <main>
-    <div class="main-app-wrapper">
+    <div class="main-app__wrapper">
         {#if gameOver}
             <GameOver score={score}  on:playAgain={playAgain}/>
         {:else}

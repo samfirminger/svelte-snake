@@ -43,11 +43,11 @@
         }
     }
 
-    .game-over-text {
+    .game-over__text {
         margin-bottom: 20px;
     }
 
-    .game-score {
+    .game-over__score {
         margin-top: 10px;
     }
 
@@ -55,30 +55,30 @@
         color: red;
     }
 
-    .play-again {
+    .game-over__play-again {
         margin-top: 50px;
     }
 
-    .play-again-button {
+    .game-over__play-again-button {
         padding: 10px;
         cursor: pointer;
     }
 
-    .play-again-button:hover {
+    .game-over__play-again-button:hover {
         background-color: #b5b3b3;
     }
 
 </style>
 
 <div class="game-over">
-    <h1 class="game-over-text">GAME OVER!</h1>
-    <h2 class="game-over-text">{currentScoreIndex === 0 ? 'NEW HIGH SCORE: ' : 'You scored '}<span class="red">{score}</span></h2>
+    <h1 class="game-over__text">GAME OVER!</h1>
+    <h2 class="game-over__text">{currentScoreIndex === 0 ? 'NEW HIGH SCORE: ' : 'You scored '}<span class="red">{score}</span></h2>
     <div>Your high scores</div>
     {#each highScores as score, i}
-        <div class="game-score {i === currentScoreIndex ? ' red' : ''}">{i + 1}. {score}</div>
+        <div class="game-over__score {i === currentScoreIndex ? ' red' : ''}">{i + 1}. {score}</div>
     {/each}
-    <div class="play-again">
+    <div class="game-over__play-again">
         <h1>Play again?</h1>
-        <button class="play-again-button" on:click={playAgain}>YES</button>
+        <button class="game-over__play-again-button" on:click={playAgain}>YES</button>
     </div>
 </div>
